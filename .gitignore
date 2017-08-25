@@ -57,3 +57,4 @@ build-iPhoneSimulator/
 # rspec failure tracking
 .rspec_status
 *.orig
+.env
