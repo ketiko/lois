@@ -1,5 +1,5 @@
 require "lois/version"
+require "lois/github"
 
 module Lois
-  # Your code goes here...
 end
