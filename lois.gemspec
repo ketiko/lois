@@ -39,4 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry-byebug"
 
   spec.add_dependency "httparty"
+  spec.add_dependency 'thor'
 end

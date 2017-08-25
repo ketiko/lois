@@ -1,0 +1,4 @@
+#! /usr/bin/env ruby
+
+require 'lois'
+Lois::CLI.start(ARGV)
