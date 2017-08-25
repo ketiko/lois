@@ -1,4 +1,4 @@
-# Lois
+# Lois [![CircleCI](https://circleci.com/gh/ketiko/lois.svg?style=svg)](https://circleci.com/gh/ketiko/lois)
 
 Lois reports statuses of CI results to Github Pull Request Statuses.
 
