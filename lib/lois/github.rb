@@ -45,10 +45,12 @@ module Lois
         context: status.context,
         description: status.description
       }
-      body.merge!(target_url: status.artifact_url) if status.artifact_url
+      body[:target_url] = status.artifact_url if status.artifact_url
       response = ::HTTParty.post(pull_request_status_api_url, basic_auth: auth, body: body.to_json)
-      exit 1 unless response.success?
+      return if  response.success?
+
+      puts response.body
+      exit 1
     end
   end
 end
-

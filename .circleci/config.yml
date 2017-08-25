@@ -38,6 +38,18 @@ jobs:
 
       # run tests!
       - run:
+          name: install
+          command: |
+            bin/rake install
+
+      # run tests!
+      - run:
+          name: Rubocop
+          command: |
+            lois rubocop -g $GITHUB_CREDENTIALS -c circleci
+
+      # run tests!
+      - run:
           name: run tests
           command: |
             mkdir results
