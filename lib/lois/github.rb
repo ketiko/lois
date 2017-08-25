@@ -1,3 +1,5 @@
+require 'httparty'
+
 module Lois
   class Github
     Status = Struct.new(:state, :context, :description, :artifact_url)
@@ -36,31 +38,16 @@ module Lois
     private
 
     def update_status(status)
-      command = curl_start + curl_data(status)
-      command = command.join(' ')
-
-      exit 1 unless system(command)
-    end
-
-    def curl_start
-      [
-        "curl --location #{pull_request_status_api_url}",
-        "--user #{credentials}",
-        '--silent',
-        '--request POST',
-        "--header \'Content-Type: application/json\'"
-      ]
-    end
-
-    def curl_data(status)
-      command = [
-        "--data \'{",
-        " \"state\": \"#{status.state}\",",
-        " \"context\": \"#{status.context}\",",
-        " \"description\": \"#{status.description}\""
-      ]
-      command << ",\"target_url\": \"#{status.artifact_url}\"" if status.artifact_url
-      command << "}\' > /dev/null"
+      username, password = credentials.split(':')
+      auth = { username: username, password: password }
+      body = {
+        state: status.state,
+        context: status.context,
+        description: status.description
+      }
+      body.merge!(target_url: status.artifact_url) if status.artifact_url
+      response = ::HTTParty.post(pull_request_status_api_url, basic_auth: auth, body: body.to_json)
+      exit 1 unless response.success?
     end
   end
 end
