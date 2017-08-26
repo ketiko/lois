@@ -49,8 +49,7 @@ module Lois
       response = ::HTTParty.post(pull_request_status_api_url, basic_auth: auth, body: body.to_json)
       return if  response.success?
 
-      puts response.body
-      exit 1
+      puts "Failed to update github: #{response.code}-#{response.body}"
     end
   end
 end
