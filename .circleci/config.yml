@@ -22,9 +22,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "lois.gemspec" }}
+          - v2-dependencies-{{ checksum "lois.gemspec" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v2-dependencies-
 
       - run:
           name: install dependencies
@@ -33,8 +33,8 @@ jobs:
 
       - save_cache:
           paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "lois.gemspec" }}
+            - vendor/bundle
+          key: v2-dependencies-{{ checksum "lois.gemspec" }}
 
       # run tests!
       - run:
