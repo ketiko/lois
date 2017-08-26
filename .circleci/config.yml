@@ -42,7 +42,11 @@ jobs:
           command: |
             bin/rake install
 
-      # run tests!
+      - run:
+          name: Bundler-Audit
+          command: |
+            lois bundler_audit -g $GITHUB_CREDENTIALS -c circleci
+
       - run:
           name: Rubocop
           command: |
