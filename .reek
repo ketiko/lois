@@ -1,0 +1,61 @@
+---
+Attribute:
+  enabled: false
+
+IrresponsibleModule:
+  enabled: false
+
+UncommunicativeVariableName:
+  enabled: false
+
+UncommunicativeModuleName:
+  enabled: false
+
+NestedIterators:
+  enabled: false
+
+UnusedPrivateMethod:
+  enabled: false
+
+TooManyMethods:
+ enabled: true
+ exclude:
+  - 'User'
+
+TooManyStatements:
+  enabled: false
+
+DuplicateMethodCall:
+  enabled: false
+
+PrimaDonnaMethod:
+  enabled: false
+
+NilCheck:
+  enabled: false
+
+UtilityFunction:
+  enabled: false
+
+LongParameterList:
+  max_params: 7
+
+TooManyInstanceVariables:
+  enabled: false
+
+InstanceVariableAssumption:
+  enabled: false
+
+FeatureEnvy:
+  enabled: false
+
+ManualDispatch:
+  enabled: false
+
+DataClump:
+  exclude:
+  - Lois::Github
+
+exclude_paths:
+  - lib/tasks
+  - vendor/bundle
