@@ -61,6 +61,25 @@ module Lois
       end
     end
 
+    desc 'brakeman', 'Run brakeman'
+    method_option :github_credentials,
+                  aliases: '-g',
+                  required: true,
+                  desc: 'Github credentials to log PR Status.'
+    method_option :ci,
+                  default: 'circleci',
+                  aliases: '-c',
+                  desc: 'CI to load env vars from.'
+    def brakeman
+      puts 'Checking brakeman'
+      configure(options)
+      if system('bundle exec brakeman  -o /dev/stdout')
+        Lois.config.github.success('brakeman', 'No rails vulnerabilities found.')
+      else
+        Lois.config.github.failure('brakeman', 'Rails vulnerabilities found.')
+      end
+    end
+
     private
 
     def configure(options)
