@@ -43,4 +43,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'httparty'
   spec.add_dependency 'thor'
   spec.add_dependency 'rubocop'
+  spec.add_dependency 'reek'
+  spec.add_dependency 'bundler-audit'
+  spec.add_dependency 'brakeman'
 end

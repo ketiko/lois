@@ -11,7 +11,6 @@ module Lois
                   default: 'circleci',
                   aliases: '-c',
                   desc: 'CI to load env vars from.'
-
     def rubocop
       puts 'Checking Rubocop'
       configure(options)
@@ -20,6 +19,26 @@ module Lois
         Lois.config.github.success('rubocop', 'Rubocop passed')
       else
         Lois.config.github.failure('rubocop', 'Rubocop failed')
+      end
+    end
+
+    desc 'bundler-audit', 'Run bundler-audit'
+    method_option :github_credentials,
+                  aliases: '-g',
+                  required: true,
+                  desc: 'Github credentials to log PR Status.'
+    method_option :ci,
+                  default: 'circleci',
+                  aliases: '-c',
+                  desc: 'CI to load env vars from.'
+    def bundler_audit
+      puts 'Checking bundler-audit'
+      configure(options)
+
+      if system('bundle exec bundle-audit check --verbose --update')
+        Lois.config.github.success('bundler-audit', 'No gem vulnerabilities found.')
+      else
+        Lois.config.github.failure('bundler-audit', 'Gem vulnerabilities detected!')
       end
     end
 
@@ -35,10 +54,10 @@ module Lois
         end
 
         config.github = Lois::Github.new(
-          Lois.config.github_credentials,
-          Lois.config.ci.organization,
-          Lois.config.ci.repository,
-          Lois.config.ci.pull_request_sha
+          config.github_credentials,
+          config.ci.organization,
+          config.ci.repository,
+          config.ci.pull_request_sha
         )
       end
     end
