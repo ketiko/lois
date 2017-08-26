@@ -52,6 +52,11 @@ jobs:
           command: |
             lois rubocop -g $GITHUB_CREDENTIALS -c circleci
 
+      - run:
+          name: Reek
+          command: |
+            lois reek -g $GITHUB_CREDENTIALS -c circleci
+
       # run tests!
       - run:
           name: run tests
