@@ -33,7 +33,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ./venv
+            - vendor/bundle
           key: v1-dependencies-{{ checksum "lois.gemspec" }}
 
       # run tests!
