@@ -29,6 +29,7 @@ Commands:
   lois help [COMMAND]                                             # Describe available commands or one specific command
   lois reek -g, --github-credentials=GITHUB_CREDENTIALS           # Run reek
   lois rubocop -g, --github-credentials=GITHUB_CREDENTIALS        # Run Rubocop
+  lois simplecov -g, --github-credentials=GITHUB_CREDENTIALS      # Run simplecov
 ```
 
 Lois has commands to run and report ruby quality metrics to Github PR Statuses.  All it requires is
@@ -64,6 +65,26 @@ A sample `.circleci/config.yml` would look like:
 - store_artifacts:
     path: lois
     destination: lois
+```
+
+### SimpleCov
+
+To get SimpleCov output you must have an `at_exit` hook.  A sample SimpleCov setup looks like:
+
+```
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start
+  SimpleCov.minimum_coverage 55
+  SimpleCov.at_exit do
+    if ENV['CI']
+      min = SimpleCov.minimum_coverage
+      actual = SimpleCov.result.covered_percent
+      system("lois simplecov -g $GITHUB_CREDENTIALS -m #{min} -a #{actual}")
+    end
+    SimpleCov.result.format!
+  end
+end
 ```
 
 ## Development
