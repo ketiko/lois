@@ -7,6 +7,10 @@ Metrics/BlockLength:
 Metrics/LineLength:
   Max: 100
 
+Metrics/ClassLength:
+  Exclude:
+    - lib/lois/cli.rb
+
 Style/Documentation:
   Enabled: false
 

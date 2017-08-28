@@ -46,4 +46,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'reek'
   spec.add_dependency 'bundler-audit'
   spec.add_dependency 'brakeman'
+  spec.add_dependency 'simplecov'
 end

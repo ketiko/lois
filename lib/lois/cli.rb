@@ -87,6 +87,35 @@ module Lois
       end
     end
 
+    desc 'simplecov', 'Run simplecov'
+    method_option :github_credentials,
+                  aliases: '-g',
+                  required: true,
+                  desc: 'Github credentials to log PR Status.'
+    method_option :ci,
+                  default: 'circleci',
+                  aliases: '-c',
+                  desc: 'CI to load env vars from.'
+    method_option :minimum,
+                  aliases: '-m',
+                  desc: 'Minimum required coverage percentage'
+    method_option :actual,
+                  aliases: '-a',
+                  desc: 'Actual required coverage percentage'
+    def simplecov
+      puts 'Checking simplecov'
+      configure(options)
+
+      actual = options[:actual].to_f
+      actual_formatted = format('%.2f%', actual)
+
+      if actual >= options[:minimum].to_f
+        Lois.config.github.success('simplecov', "#{actual_formatted} coverage.")
+      else
+        Lois.config.github.failure('simplecov', "#{actual_formatted} is too low.")
+      end
+    end
+
     private
 
     def configure(options)
