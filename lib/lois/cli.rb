@@ -15,7 +15,7 @@ module Lois
       puts 'Checking Rubocop'
       configure(options)
 
-      if system('bundle exec rubocop -f p -o lois/rubocop.html')
+      if system('bundle exec rubocop -o lois/rubocop.html -f p')
         Lois.config.github.success('rubocop', 'Rubocop passed')
       else
         Lois.config.github.failure('rubocop', 'Rubocop failed')
