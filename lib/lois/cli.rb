@@ -15,7 +15,7 @@ module Lois
       puts 'Checking Rubocop'
       configure(options)
 
-      if system('bundle exec rubocop -f p')
+      if system('bundle exec rubocop -f html -o lois/rubocop.html -f p')
         Lois.config.github.success('rubocop', 'Rubocop passed')
       else
         Lois.config.github.failure('rubocop', 'Rubocop failed')
@@ -35,7 +35,12 @@ module Lois
       puts 'Checking bundler-audit'
       configure(options)
 
-      if system('bundle exec bundle-audit check --verbose --update')
+      output = `bundle exec bundle-audit check --verbose --update`
+      result = $CHILD_STATUS
+      File.write('lois/bundler-audit.log', output)
+      puts output
+
+      if result.success?
         Lois.config.github.success('bundler-audit', 'No gem vulnerabilities found.')
       else
         Lois.config.github.failure('bundler-audit', 'Gem vulnerabilities detected!')
@@ -54,6 +59,8 @@ module Lois
     def reek
       puts 'Checking reek'
       configure(options)
+
+      system('bundle exec reek -f html > lois/reek.html')
       if system('bundle exec reek -n --sort-by smelliness')
         Lois.config.github.success('reek', 'No code smells.')
       else
@@ -73,7 +80,7 @@ module Lois
     def brakeman
       puts 'Checking brakeman'
       configure(options)
-      if system('bundle exec brakeman  -o /dev/stdout')
+      if system('bundle exec brakeman -o lois/brakeman.html -o /dev/stdout')
         Lois.config.github.success('brakeman', 'No rails vulnerabilities found.')
       else
         Lois.config.github.failure('brakeman', 'Rails vulnerabilities found.')
@@ -90,6 +97,8 @@ module Lois
         when 'circleci'
           config.ci = Lois::Ci::Circleci.new
         end
+
+        Dir.mkdir('lois') unless Dir.exist?('lois')
 
         config.github = Lois::Github.new(
           config.github_credentials,
