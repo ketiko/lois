@@ -96,7 +96,7 @@ module Lois
           config.ci = Lois::Ci::Circleci.new
         end
 
-        Dir.mkdir('lois') unles Dir.exist?('lois')
+        Dir.mkdir('lois') unless Dir.exist?('lois')
 
         config.github = Lois::Github.new(
           config.github_credentials,
