@@ -15,7 +15,7 @@ module Lois
       puts 'Checking Rubocop'
       configure(options)
 
-      if system('bundle exec rubocop -o lois/rubocop.html -f p')
+      if system('bundle exec rubocop -f html -o lois/rubocop.html -f p')
         Lois.config.github.success('rubocop', 'Rubocop passed')
       else
         Lois.config.github.failure('rubocop', 'Rubocop failed')
@@ -59,6 +59,8 @@ module Lois
     def reek
       puts 'Checking reek'
       configure(options)
+
+      system('bundle exec reek -f html > lois/reek.html')
       if system('bundle exec reek -n --sort-by smelliness')
         Lois.config.github.success('reek', 'No code smells.')
       else
