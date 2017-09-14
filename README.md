@@ -69,7 +69,7 @@ A sample `.circleci/config.yml` would look like:
 ```
 
 ##### CircleCI 1.0
-A sample `.circleci/config.yml` would look like:
+A sample `circle.yml` would look like:
 ```
 test:
   pre:
