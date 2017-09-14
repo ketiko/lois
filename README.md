@@ -1,6 +1,6 @@
 # Lois [![CircleCI](https://circleci.com/gh/ketiko/lois.svg?style=svg)](https://circleci.com/gh/ketiko/lois)
 
-Lois reports statuses of CI results to Github Pull Request Statuses.
+Lois reports statuses of CI results to GitHub Pull Request Statuses.
 
 ## Installation
 
@@ -32,8 +32,8 @@ Commands:
   lois simplecov -g, --github-credentials=GITHUB_CREDENTIALS      # Run simplecov
 ```
 
-Lois has commands to run and report ruby quality metrics to Github PR Statuses.  All it requires is
-a github basic auth credentials for a user to report the statuses.  The user needs write access to the repo to post
+Lois has commands to run and report ruby quality metrics to GitHub PR Statuses.  All it requires is
+a GitHub basic auth credentials for a user to report the statuses.  The user needs write access to the repo to post
 PR status updates.
 
 See [https://developer.github.com/v3/auth/#basic-authentication](https://developer.github.com/v3/auth/#basic-authentication).
@@ -43,28 +43,42 @@ Currently we only support reporting through [CircleCI](https://circleci.com/), b
 
 Lois will output all the results of the checks to a `lois` directory.  You can add this to your artifact path to view the html representation of the results later.
 
+###### CircleCI 2.0
 A sample `.circleci/config.yml` would look like:
 
 ```
 - run:
     name: Bundler-Audit
-    command: bin/lois bundler-audit -g $GITHUB_CREDENTIALS
+    command: bundle exec lois bundler-audit -g $GITHUB_CREDENTIALS
 
 - run:
     name: Brakeman
-    command: bin/lois brakeman -g $GITHUB_CREDENTIALS
+    command: bundle exec lois brakeman -g $GITHUB_CREDENTIALS
 
 - run:
     name: Rubocop
-    command: bin/lois rubocop -g $GITHUB_CREDENTIALS
+    command: bundle exec lois rubocop -g $GITHUB_CREDENTIALS
 
 - run:
     name: Reek
-    command: bin/lois reek -g $GITHUB_CREDENTIALS
+    command: bundle exec lois reek -g $GITHUB_CREDENTIALS
 
 - store_artifacts:
     path: lois
     destination: lois
+```
+
+###### CircleCI 1.0
+A sample `.circleci/config.yml` would look like:
+```
+test:
+  pre:
+    - bundle exec lois bundler-audit -g $GITHUB_CREDENTIALS
+    - bundle exec lois brakeman -g $GITHUB_CREDENTIALS
+    - bundle exec lois rubocop -g $GITHUB_CREDENTIALS
+    - bundle exec lois reek -g $GITHUB_CREDENTIALS
+  post:
+    - cp -r lois $CIRCLE_ARTIFACTS/
 ```
 
 ### SimpleCov
