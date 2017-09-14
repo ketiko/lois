@@ -43,7 +43,7 @@ Currently we only support reporting through [CircleCI](https://circleci.com/), b
 
 Lois will output all the results of the checks to a `lois` directory.  You can add this to your artifact path to view the html representation of the results later.
 
-###### CircleCI 2.0
+##### CircleCI 2.0
 A sample `.circleci/config.yml` would look like:
 
 ```
@@ -68,7 +68,7 @@ A sample `.circleci/config.yml` would look like:
     destination: lois
 ```
 
-###### CircleCI 1.0
+##### CircleCI 1.0
 A sample `.circleci/config.yml` would look like:
 ```
 test:
