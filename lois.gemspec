@@ -1,5 +1,3 @@
-# coding: utf-8
-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'lois/version'
@@ -25,17 +23,17 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'pry-byebug'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rspec_junit_formatter'
-  spec.add_development_dependency 'pry-byebug'
 
   spec.add_dependency 'activesupport'
-  spec.add_dependency 'httparty'
-  spec.add_dependency 'thor'
-  spec.add_dependency 'rubocop'
-  spec.add_dependency 'reek'
-  spec.add_dependency 'bundler-audit'
   spec.add_dependency 'brakeman'
+  spec.add_dependency 'bundler-audit'
+  spec.add_dependency 'httparty'
+  spec.add_dependency 'reek'
+  spec.add_dependency 'rubocop'
   spec.add_dependency 'simplecov'
+  spec.add_dependency 'thor'
 end
