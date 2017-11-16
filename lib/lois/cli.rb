@@ -15,7 +15,7 @@ module Lois
       puts 'Checking Rubocop'
       configure(options)
 
-      if system('bundle exec rubocop -f html -o lois/rubocop.html -f p')
+      if system('rubocop -f html -o lois/rubocop.html -f p')
         Lois.config.github.success('rubocop', 'Rubocop passed')
       else
         Lois.config.github.failure('rubocop', 'Rubocop failed')
@@ -35,7 +35,7 @@ module Lois
       puts 'Checking bundler-audit'
       configure(options)
 
-      output = `bundle exec bundle-audit check --verbose --update`
+      output = `bundle-audit check --verbose --update`
       result = $CHILD_STATUS
       File.write('lois/bundler-audit.log', output)
       puts output
@@ -60,8 +60,8 @@ module Lois
       puts 'Checking reek'
       configure(options)
 
-      system('bundle exec reek -f html > lois/reek.html')
-      if system('bundle exec reek -n --sort-by smelliness')
+      system('reek -f html > lois/reek.html')
+      if system('reek -n --sort-by smelliness')
         Lois.config.github.success('reek', 'No code smells.')
       else
         Lois.config.github.failure('reek', 'Code smells found.')
@@ -80,7 +80,7 @@ module Lois
     def brakeman
       puts 'Checking brakeman'
       configure(options)
-      if system('bundle exec brakeman -o lois/brakeman.html -o /dev/stdout')
+      if system('brakeman -o lois/brakeman.html -o /dev/stdout')
         Lois.config.github.success('brakeman', 'No rails vulnerabilities found.')
       else
         Lois.config.github.failure('brakeman', 'Rails vulnerabilities found.')
