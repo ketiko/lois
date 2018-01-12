@@ -107,7 +107,7 @@ module Lois
       configure(options)
 
       actual = options[:actual].to_f
-      actual_formatted = format('%%.2f%%', actual)
+      actual_formatted = format('%.2f%%', actual)
 
       if actual >= options[:minimum].to_f
         Lois.config.github.success('simplecov', "#{actual_formatted} coverage.")
