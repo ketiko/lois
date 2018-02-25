@@ -84,7 +84,7 @@ test:
 ##### Travis
 A sample `.travis.yml` would look like:
 ```
-script:
+before_script:
   - bin/lois bundler-audit -c travis -g $GITHUB_CREDENTIALS
   - bin/lois rubocop -c travis -g $GITHUB_CREDENTIALS
   - bin/lois reek -c travis -g $GITHUB_CREDENTIALS
