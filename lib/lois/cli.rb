@@ -125,6 +125,8 @@ module Lois
         case options[:ci]
         when 'circleci'
           config.ci = Lois::Ci::Circleci.new
+        when 'travis'
+          config.ci = Lois::Ci::Travis.new
         end
 
         Dir.mkdir('lois') unless Dir.exist?('lois')
@@ -133,7 +135,7 @@ module Lois
           config.github_credentials,
           config.ci.organization,
           config.ci.repository,
-          config.ci.pull_request_sha
+          config.ci.commit_sha
         )
       end
     end

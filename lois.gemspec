@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Ryan Hansen']
   spec.email         = ['ketiko@gmail.com']
 
-  spec.summary       = 'Lois reports statuses of CI results to Github Pull Request Statuses.'
-  spec.description   = 'Lois reports statuses of CI results to Github Pull Request Statuses.'
+  spec.summary       = 'Lois reports statuses of CI results to Github Commit Statuses.'
+  spec.description   = 'Lois reports statuses of CI results to Github Commit Statuses.'
   spec.homepage      = 'https://www.github.com/ketiko/lois'
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|

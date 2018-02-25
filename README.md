@@ -1,6 +1,6 @@
 # Lois [![CircleCI](https://circleci.com/gh/ketiko/lois.svg?style=svg)](https://circleci.com/gh/ketiko/lois)
 
-Lois reports statuses of CI results to GitHub Pull Request Statuses.
+Lois reports statuses of CI results to GitHub Commit Statuses.
 
 ## Installation
 

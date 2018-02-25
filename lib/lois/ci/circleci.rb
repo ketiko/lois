@@ -9,7 +9,7 @@ module Lois
         ENV.fetch('CIRCLE_PROJECT_REPONAME')
       end
 
-      def pull_request_sha
+      def commit_sha
         ENV.fetch('CIRCLE_SHA1')
       end
     end
