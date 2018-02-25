@@ -4,13 +4,13 @@ module Lois
   class Github
     Status = Struct.new(:state, :context, :description, :artifact_url)
 
-    attr_reader :credentials, :organization, :repository, :pull_request_sha
+    attr_reader :credentials, :organization, :repository, :commit_sha
 
-    def initialize(credentials, organization, repository, pull_request_sha)
+    def initialize(credentials, organization, repository, commit_sha)
       @credentials = credentials
       @organization = organization
       @repository = repository
-      @pull_request_sha = pull_request_sha
+      @commit_sha = commit_sha
     end
 
     def pending(context, description, artifact_url = nil)
@@ -25,13 +25,13 @@ module Lois
       update_status(Status.new('failure', context, description, artifact_url))
     end
 
-    def pull_request_status_api_url
-      @pull_request_status_api_url ||= File.join(
+    def commit_status_api_url
+      @commit_status_api_url ||= File.join(
         'https://api.github.com/repos',
         organization,
         repository,
         'statuses',
-        pull_request_sha
+        commit_sha
       )
     end
 
@@ -46,7 +46,7 @@ module Lois
         description: status.description
       }
       body[:target_url] = status.artifact_url if status.artifact_url
-      response = ::HTTParty.post(pull_request_status_api_url, basic_auth: auth, body: body.to_json)
+      response = ::HTTParty.post(commit_status_api_url, basic_auth: auth, body: body.to_json)
       return if  response.success?
 
       puts "Failed to update github: #{response.code}-#{response.body}"

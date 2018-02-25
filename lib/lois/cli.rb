@@ -4,13 +4,13 @@ module Lois
   class CLI < Thor
     desc 'rubocop', 'Run Rubocop'
     method_option :github_credentials,
-                  aliases: '-g',
-                  required: true,
-                  desc: 'Github credentials to log PR Status.'
+      aliases: '-g',
+      required: true,
+      desc: 'Github credentials to log PR Status.'
     method_option :ci,
-                  default: 'circleci',
-                  aliases: '-c',
-                  desc: 'CI to load env vars from.'
+      default: 'circleci',
+      aliases: '-c',
+      desc: 'CI to load env vars from.'
     def rubocop
       puts 'Checking Rubocop'
       configure(options)
@@ -24,13 +24,13 @@ module Lois
 
     desc 'bundler-audit', 'Run bundler-audit'
     method_option :github_credentials,
-                  aliases: '-g',
-                  required: true,
-                  desc: 'Github credentials to log PR Status.'
+      aliases: '-g',
+      required: true,
+      desc: 'Github credentials to log PR Status.'
     method_option :ci,
-                  default: 'circleci',
-                  aliases: '-c',
-                  desc: 'CI to load env vars from.'
+      default: 'circleci',
+      aliases: '-c',
+      desc: 'CI to load env vars from.'
     def bundler_audit
       puts 'Checking bundler-audit'
       configure(options)
@@ -49,13 +49,13 @@ module Lois
 
     desc 'reek', 'Run reek'
     method_option :github_credentials,
-                  aliases: '-g',
-                  required: true,
-                  desc: 'Github credentials to log PR Status.'
+      aliases: '-g',
+      required: true,
+      desc: 'Github credentials to log PR Status.'
     method_option :ci,
-                  default: 'circleci',
-                  aliases: '-c',
-                  desc: 'CI to load env vars from.'
+      default: 'circleci',
+      aliases: '-c',
+      desc: 'CI to load env vars from.'
     def reek
       puts 'Checking reek'
       configure(options)
@@ -70,13 +70,13 @@ module Lois
 
     desc 'brakeman', 'Run brakeman'
     method_option :github_credentials,
-                  aliases: '-g',
-                  required: true,
-                  desc: 'Github credentials to log PR Status.'
+      aliases: '-g',
+      required: true,
+      desc: 'Github credentials to log PR Status.'
     method_option :ci,
-                  default: 'circleci',
-                  aliases: '-c',
-                  desc: 'CI to load env vars from.'
+      default: 'circleci',
+      aliases: '-c',
+      desc: 'CI to load env vars from.'
     def brakeman
       puts 'Checking brakeman'
       configure(options)
@@ -89,19 +89,19 @@ module Lois
 
     desc 'simplecov', 'Run simplecov'
     method_option :github_credentials,
-                  aliases: '-g',
-                  required: true,
-                  desc: 'Github credentials to log PR Status.'
+      aliases: '-g',
+      required: true,
+      desc: 'Github credentials to log PR Status.'
     method_option :ci,
-                  default: 'circleci',
-                  aliases: '-c',
-                  desc: 'CI to load env vars from.'
+      default: 'circleci',
+      aliases: '-c',
+      desc: 'CI to load env vars from.'
     method_option :minimum,
-                  aliases: '-m',
-                  desc: 'Minimum required coverage percentage'
+      aliases: '-m',
+      desc: 'Minimum required coverage percentage'
     method_option :actual,
-                  aliases: '-a',
-                  desc: 'Actual required coverage percentage'
+      aliases: '-a',
+      desc: 'Actual required coverage percentage'
     def simplecov
       puts 'Checking simplecov'
       configure(options)
@@ -125,6 +125,8 @@ module Lois
         case options[:ci]
         when 'circleci'
           config.ci = Lois::Ci::Circleci.new
+        when 'travis'
+          config.ci = Lois::Ci::Travis.new
         end
 
         Dir.mkdir('lois') unless Dir.exist?('lois')
@@ -133,7 +135,7 @@ module Lois
           config.github_credentials,
           config.ci.organization,
           config.ci.repository,
-          config.ci.pull_request_sha
+          config.ci.commit_sha
         )
       end
     end

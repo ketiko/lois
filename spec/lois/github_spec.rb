@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'digest/sha1'
 
 RSpec.describe Lois::Github do
-  describe '#pull_request_status_api_url' do
-    subject { github.pull_request_status_api_url }
+  describe '#commit_status_api_url' do
+    subject { github.commit_status_api_url }
 
     let(:github) { described_class.new(creds, org, repo, sha) }
     let(:creds) { '[redacted]' }
