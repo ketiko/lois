@@ -39,7 +39,7 @@ PR status updates.
 See [https://developer.github.com/v3/auth/#basic-authentication](https://developer.github.com/v3/auth/#basic-authentication).
 We recommend using oauth tokens and not your password.
 
-Currently we only support reporting through [CircleCI](https://circleci.com/), but PRs for additional continuous integration systems are welcome.
+Currently we support reporting through [CircleCI](https://circleci.com/) and [Travis](https://travis-ci.org), but PRs for additional continuous integration systems are welcome.
 
 Lois will output all the results of the checks to a `lois` directory.  You can add this to your artifact path to view the html representation of the results later.
 
@@ -49,19 +49,19 @@ A sample `.circleci/config.yml` would look like:
 ```
 - run:
     name: Bundler-Audit
-    command: bundle exec lois bundler-audit -g $GITHUB_CREDENTIALS
+    command: bundle exec lois bundler-audit -c circleci -g $GITHUB_CREDENTIALS
 
 - run:
     name: Brakeman
-    command: bundle exec lois brakeman -g $GITHUB_CREDENTIALS
+    command: bundle exec lois brakeman -c circleci -g $GITHUB_CREDENTIALS
 
 - run:
     name: Rubocop
-    command: bundle exec lois rubocop -g $GITHUB_CREDENTIALS
+    command: bundle exec lois rubocop -c circleci -g $GITHUB_CREDENTIALS
 
 - run:
     name: Reek
-    command: bundle exec lois reek -g $GITHUB_CREDENTIALS
+    command: bundle exec lois reek -c circleci -g $GITHUB_CREDENTIALS
 
 - store_artifacts:
     path: lois
@@ -73,12 +73,21 @@ A sample `circle.yml` would look like:
 ```
 test:
   pre:
-    - bundle exec lois bundler-audit -g $GITHUB_CREDENTIALS
-    - bundle exec lois brakeman -g $GITHUB_CREDENTIALS
-    - bundle exec lois rubocop -g $GITHUB_CREDENTIALS
-    - bundle exec lois reek -g $GITHUB_CREDENTIALS
+    - bundle exec lois bundler-audit -c circleci -g $GITHUB_CREDENTIALS
+    - bundle exec lois brakeman -c circleci -g $GITHUB_CREDENTIALS
+    - bundle exec lois rubocop -c circleci -g $GITHUB_CREDENTIALS
+    - bundle exec lois reek -c circleci -g $GITHUB_CREDENTIALS
   post:
     - cp -r lois $CIRCLE_ARTIFACTS/
+```
+
+##### Travis
+A sample `.travis.yml` would look like:
+```
+script:
+  - bin/lois bundler-audit -c travis -g $GITHUB_CREDENTIALS
+  - bin/lois rubocop -c travis -g $GITHUB_CREDENTIALS
+  - bin/lois reek -c travis -g $GITHUB_CREDENTIALS
 ```
 
 ### SimpleCov
