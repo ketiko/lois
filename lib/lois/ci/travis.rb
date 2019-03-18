@@ -11,7 +11,7 @@ module Lois
 
       def commit_sha
         sha = ENV.fetch('TRAVIS_PULL_REQUEST_SHA')
-        sha.length == 0 ? ENV.fetch('TRAVIS_COMMIT') : sha
+        sha.empty? ? ENV.fetch('TRAVIS_COMMIT') : sha
       end
     end
   end

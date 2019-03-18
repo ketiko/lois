@@ -1,4 +1,4 @@
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'lois/version'
 
@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'brakeman'
   spec.add_dependency 'bundler-audit'
   spec.add_dependency 'httparty'
+  spec.add_dependency 'i18n-tasks'
   spec.add_dependency 'reek'
   spec.add_dependency 'rubocop'
   spec.add_dependency 'simplecov'

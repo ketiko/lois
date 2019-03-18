@@ -30,6 +30,7 @@ Commands:
   lois reek -g, --github-credentials=GITHUB_CREDENTIALS           # Run reek
   lois rubocop -g, --github-credentials=GITHUB_CREDENTIALS        # Run Rubocop
   lois simplecov -g, --github-credentials=GITHUB_CREDENTIALS      # Run simplecov
+  lois i18n-tasks -g, --github-credentials=GITHUB_CREDENTIALS     # Run i18n-tasks
 ```
 
 Lois has commands to run and report ruby quality metrics to GitHub PR Statuses.  All it requires is
@@ -62,6 +63,10 @@ A sample `.circleci/config.yml` would look like:
 - run:
     name: Reek
     command: bundle exec lois reek -c circleci -g $GITHUB_CREDENTIALS
+    
+- run:
+    name: i18n-tasks
+    command: bundle exec lois i18n-tasks -c circleci -g $GITHUB_CREDENTIALS
 
 - store_artifacts:
     path: lois
