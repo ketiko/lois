@@ -16,7 +16,7 @@ data:
   # Locale files or `File.find` patterns where translations are read from:
   read:
     ## Default:
-    # - config/locales/%{locale}.yml
+    - spec/locales/%{locale}.yml
     ## More files:
     # - config/locales/**/*.%{locale}.yml
 
@@ -53,7 +53,7 @@ data:
 # Find translate calls
 search:
   ## Paths or `File.find` patterns to search in:
-  # paths:
+  paths:
    - spec/dummy_app/
 
   ## Root directories for relative keys resolution.
