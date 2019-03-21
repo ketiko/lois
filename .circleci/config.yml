@@ -40,14 +40,14 @@ jobs:
 
       # run tests!
       - run:
-          name: i18n-tasks
-          command: |
-            lois i18n-tasks -g $GITHUB_CREDENTIALS -c circleci
-
-      - run:
           name: install
           command: |
             bin/rake install
+
+      - run:
+          name: i18n-tasks
+          command: |
+            lois i18n-tasks -g $GITHUB_CREDENTIALS -c circleci
 
       - run:
           name: Bundler-Audit
