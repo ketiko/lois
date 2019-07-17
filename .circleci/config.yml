@@ -7,9 +7,9 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-       - image: circleci/ruby:2.4.1-node-browsers
-         environment:
-           COVERAGE: true
+      - image: circleci/ruby:2.4.1-node-browsers
+        environment:
+          COVERAGE: true
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -24,9 +24,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v2-dependencies-{{ checksum "lois.gemspec" }}
-          # fallback to using the latest cache if no exact match is found
-          - v2-dependencies-
+            - v2-dependencies-{{ checksum "lois.gemspec" }}
+            # fallback to using the latest cache if no exact match is found
+            - v2-dependencies-
 
       - run:
           name: install dependencies
@@ -43,6 +43,11 @@ jobs:
           name: install
           command: |
             bin/rake install
+
+      - run:
+          name: i18n-tasks
+          command: |
+            lois i18n-tasks -g $GITHUB_CREDENTIALS -c circleci
 
       - run:
           name: Bundler-Audit

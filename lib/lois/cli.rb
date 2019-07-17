@@ -2,6 +2,30 @@ require 'thor'
 
 module Lois
   class CLI < Thor
+    desc 'i18n-tasks', 'Run i18n-tasks'
+    method_option :github_credentials,
+                  aliases: '-g',
+                  required: true,
+                  desc: 'Github credentials to log PR Status.'
+    method_option :ci,
+                  default: 'circleci',
+                  aliases: '-c',
+                  desc: 'CI to load env vars from.'
+    method_option :locale,
+                  default: nil,
+                  aliases: '-l',
+                  desc: 'Specific locale to validate'
+    def i18n_tasks
+      puts 'Checking i18n-tasks'
+      configure(options)
+      locale_param = (" -l #{options[:locale]}" if options[:locale].to_s.length.positive?)
+      if system("i18n-tasks health#{locale_param}")
+        Lois.config.github.success('i18n-tasks', 'The translation files are healthy.')
+      else
+        Lois.config.github.failure('i18n-tasks', 'The translation files are not healthy')
+      end
+    end
+
     desc 'rubocop', 'Run Rubocop'
     method_option :github_credentials,
                   aliases: '-g',
