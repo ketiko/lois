@@ -31,11 +31,17 @@ module Lois
                   default: 'circleci',
                   aliases: '-c',
                   desc: 'CI to load env vars from.'
+    method_option :ignore
+                  desc: 'Ignore a specific CVE vulnerability'
+                  aliases: '\--ignore'
     def bundler_audit
       puts 'Checking bundler-audit'
       configure(options)
 
-      output = `bundle-audit check --verbose --update`
+      ignore = "--ignore #{options[:ignore]}"
+      command = 'bundle-audit check --verbose --update'
+      command += ignore if options[:ignore]
+      output = `#{command}`
       result = $CHILD_STATUS
       File.write('lois/bundler-audit.log', output)
       puts output
